@@ -1,0 +1,159 @@
+<!doctype html>
+<html>
+<head>
+	<title>jQuery</title>
+</head>
+<body>
+	<div>
+		<p>Paragraph 1</p>
+		<p>Paragraph 2</p>
+		<p>Paragraph 3</p>
+	</div>
+
+	<input type="text" id="userName" placeholder="username">
+	<br>
+	<b id="user"></b>
+	<br><br>
+
+	<div id="click">
+		<h1>Click This</h1>
+	</div>
+	<div id="reaction">
+		<p>affect this</p>
+	</div>
+	
+	<div id="hov">
+		<h1>Mouse in/out</h1>
+	</div>
+	<div id="vanish">
+		<h3>now you see me...</h3>
+	</div>
+
+	<table id="listPeople" border="1">
+		<tr>
+			<th>Name</th>
+			<th>Age</th>
+			<th>Gender</th>
+		</tr>
+	</table>
+
+	<h1>Transversal</h1>
+	<div id="commonAncestor">
+		<div>
+			<div>
+				<div>
+					<p class="clicker">click here...</p>
+				</div>
+			</div>
+		</div>
+		<div class="targetContainer">
+			<div>
+				<div>
+					<p>and affect here</p>
+				</div>
+				<p>but not here</p>
+			</div>
+		</div>
+	</div>
+	<div class="targetContainer">
+		<div>
+			<div>
+				<p>or here</p>
+			</div>
+		</div>
+	</div>
+	<script src="js/jquery.js"></script>
+	<script src="js/jquery-ui.js"></script>
+	<script>
+		//$(SELECTOR).METHOD( function(){DO THIS} );
+
+		//ways to index items
+		var p = $('p')[0];
+		$(p).css('color', '#f00');
+		$($('p')[1]).css('color', '#0f0');
+		$('p').eq(2).css('color', '#00f');
+		
+		//track the keys after pressed and display input value somewhere.
+		//assign an input value to 'username' variable
+		//add value as html in a container
+		$("#userName").keyup(function() {
+			var username = $("#userName").val();
+			$('#user').html(username);
+		});
+
+		//click events and various ways to show and hide elements
+		$("#click").click(function() {
+			$("#reaction").fadeToggle(2000);
+		});
+
+		//hover method is 2 functions / events in  1
+		$('#hov').hover(function(){
+			$('#vanish').hide();
+		},function(){
+			$('#vanish').show();
+		});
+
+		//loop through dataset and populate an html table
+		people = {
+			'John': {
+				age: 25,
+				gender: 'boy'
+			},
+			'Jessie': {
+				age: 30,
+				gender: 'girl'
+			},
+			'Johanna': {
+				age: 28,
+				gender: 'girl'
+			},
+			'Joy': {
+				age: 15,
+				gender: 'girl'
+			},
+			'Mary': {
+				age: 28,
+				gender: 'girl'
+			},
+			'Peter': {
+				age: 95,
+				gender: 'boy'
+			},
+			'Sebastian': {
+				age: 50,
+				gender: 'boy'
+			},
+			'Erika': {
+				age: 27,
+				gender: 'girl'
+			},
+			'Patrick': {
+				age: 40,
+				gender: 'boy'
+			},
+			'Samantha': {
+				age: 60,
+				gender: 'girl'
+			}
+		};
+
+		$.each(people, function(key, value) {
+			$('#listPeople').append(`
+				<tr>
+					<td>${key}</td>
+					<td>${value.age}</td>
+					<td>${value.gender}</td>
+				</tr>
+			`);
+		});
+
+		//transversals
+		$('.clicker').click(function() {
+			$(this).parents('#commonAncestor').find('.targetContainer div div p').css({
+				color: '#f00',
+				background: '#ccc'
+			});
+		});
+	</script>
+</body>
+</html>
